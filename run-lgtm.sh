@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RELEASE="${1:-$(date +%Y%m%d%H%M)}"
+RELEASE="${1:-$(date +%Y%m%d%H%M%S)}"
 
 # Build docker image
 cd docker/
