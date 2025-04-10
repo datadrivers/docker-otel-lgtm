@@ -4,12 +4,12 @@ RELEASE="${1:-$(date +%Y%m%d%H%M%S)}"
 
 # Build docker image
 cd docker/
-docker build -t datadrivers/otel-lgtm:"${RELEASE}" -t datadrivers/otel-lgtm:latest .
+podman build -t datadrivers/otel-lgtm:"${RELEASE}" -t datadrivers/otel-lgtm:latest .
 cd ../
 
 touch .env
 
-docker run \
+podman run \
 	--name lgtm \
 	-p 3000:3000 \
 	-p 4317:4317 \
