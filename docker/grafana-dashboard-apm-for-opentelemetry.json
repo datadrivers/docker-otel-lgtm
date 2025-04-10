@@ -25,7 +25,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 7,
+  "id": 4,
   "links": [],
   "panels": [
     {
@@ -228,7 +228,7 @@
         "type": "tempo",
         "uid": "${tempo_datasource}"
       },
-      "description": "Shows the timestamp of the latest span received in the past 24h.",
+      "description": "Shows the timestamp of the latest span received in the past 3h.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -308,14 +308,14 @@
             }
           ],
           "limit": 20,
-          "metricsQueryType": "range",
-          "query": "{resource.service.namespace=\"$service_namespace\" && resource.service.name=\"$service_name\"} | count_over_time()",
+          "metricsQueryType": "instant",
+          "query": "{resource.service.name=\"$service_name\" || resource.service.namespace=\"$service_namespace\"} | count_over_time()",
           "queryType": "traceql",
           "refId": "A",
           "tableType": "traces"
         }
       ],
-      "timeFrom": "now-24h",
+      "timeFrom": "now-3h",
       "title": "Latest traces received",
       "type": "stat"
     },
@@ -2518,5 +2518,5 @@
   "timezone": "",
   "title": "Lightweight APM for OpenTelemetry",
   "uid": "febljk0a32qyoa",
-  "version": 2
+  "version": 3
 }
