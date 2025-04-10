@@ -16,3 +16,8 @@ providers:
     options:
       path: /otel-lgtm/grafana-dashboard-jvm-metrics.json
       foldersFromFilesStructure: false
+  - name: "Lightweight APM for OpenTelemetry"
+    type: file
+    options:
+      path: /otel-lgtm/grafana-dashboard-apm-for-opentelemetry.json
+      foldersFromFilesStructure: false
