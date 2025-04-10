@@ -1,8 +1,11 @@
 #!/bin/bash
 
-RELEASE=${1:-latest}
+RELEASE="${1:-$(date +%Y%m%d%H%M)}"
 
-docker pull docker.io/grafana/otel-lgtm:"${RELEASE}"
+# Build docker image
+cd docker/
+docker build -t datadrivers/otel-lgtm:"${RELEASE}" -t datadrivers/otel-lgtm:latest .
+cd ../
 
 touch .env
 
@@ -18,4 +21,4 @@ docker run \
 	-v "$PWD"/container/loki:/data/loki \
 	-e GF_PATHS_DATA=/data/grafana \
 	--env-file .env \
-	docker.io/grafana/otel-lgtm:"${RELEASE}"
+	datadrivers/otel-lgtm:"${RELEASE}"

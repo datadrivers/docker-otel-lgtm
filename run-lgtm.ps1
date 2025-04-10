@@ -2,7 +2,7 @@ $release_tag = "latest"
 
 $supportedContainerRuntime = 'podman', 'docker'
 $containers = 'grafana', 'prometheus', 'loki'
-$image = "docker.io/grafana/otel-lgtm:$release_tag"
+$image = "datadrivers/otel-lgtm:$release_tag"
 
 # prefilled pwd var to avoid repeted calls in build string.moved to top init section or logic
 $path = (Get-Location).Path
