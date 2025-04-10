@@ -30,9 +30,10 @@ ENV TARGETARCH=${TARGETARCH}
 # renovate: datasource=github-releases depName=cosign packageName=sigstore/cosign
 ARG COSIGN_VERSION=v2.5.0
 
-RUN bash -c 'cd /tmp && \
-    curl -O -L https://github.com/sigstore/cosign/releases/latest/download/cosign-"${COSIGN_VERSION:1}"-1.x86_64.rpm && \
-    yum install -y cosign-"${COSIGN_VERSION:1}"-1.x86_64.rpm'
+RUN ARCH=$(arch | sed s/arm64/aarch64/) \
+    bash -c 'cd /tmp && \
+    curl -O -L https://github.com/sigstore/cosign/releases/latest/download/cosign-"${COSIGN_VERSION:1}"-1."${ARCH}".rpm && \
+    yum install -y cosign-"${COSIGN_VERSION:1}"-1."${ARCH}".rpm'
 
 # hadolint ignore=DL3033
 RUN yum install -y unzip dos2unix jq procps
