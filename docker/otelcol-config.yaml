@@ -15,6 +15,12 @@ receivers:
 
 processors:
   batch:
+  redaction/mask:
+    allow_all_keys: true
+    blocked_values:
+      - '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' # UUID
+      - '\b[A-Z][a-z]+\s+[A-Z][a-z]+\b' # Full name (first and last)
+      - '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}' # Email
 
 exporters:
   otlphttp/metrics:
@@ -40,16 +46,16 @@ service:
   pipelines:
     traces:
       receivers: [otlp]
-      processors: [batch]
+      processors: [redaction/mask,batch]
       exporters: [otlphttp/traces]
       #exporters: [otlphttp/traces,debug/traces]
     metrics:
       receivers: [otlp, prometheus/collector]
-      processors: [batch]
+      processors: [redaction/mask,batch]
       exporters: [otlphttp/metrics]
       #exporters: [otlphttp/metrics,debug/metrics]
     logs:
       receivers: [otlp]
-      processors: [batch]
+      processors: [redaction/mask,batch]
       exporters: [otlphttp/logs]
       #exporters: [otlphttp/logs,debug/logs]
