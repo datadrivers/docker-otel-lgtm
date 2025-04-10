@@ -11,7 +11,7 @@ const logger = new Logger('dice-lib')
 function rollOnce(i, min, max) {
   return tracer.startActiveSpan(`rollOnce:${i}`, (span) => {
     counter.add(1)
-    logger.log(`Rolling a single die between ${min} and ${max}`)
+    logger.log(`Rolling a single dice between ${min} and ${max}`)
     const result = Math.floor(Math.random() * (max - min + 1) + min)
 
     // Add an attribute to the span

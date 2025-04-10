@@ -2,6 +2,7 @@ const { trace, SpanStatusCode } = require('@opentelemetry/api')
 const express = require('express')
 const { rollTheDice } = require('./dice.js')
 const { Logger } = require('./logger.js')
+const { faker } = require('@faker-js/faker')
 
 const tracer = trace.getTracer('dice-server', '0.1.0')
 
@@ -12,8 +13,11 @@ const app = express()
 
 app.get('/rolldice', (req, res) => {
   return tracer.startActiveSpan('rollDice', (span) => {
-    logger.log('Received request to roll dice')
+    const randomName = faker.person.fullName();
+    const randomEmail = faker.internet.email();
+    const randomUUID = faker.string.uuid();
     const rolls = req.query.rolls ? parseInt(req.query.rolls.toString()) : NaN
+    logger.log('Received request to dice ' + rolls + ' rolls for UUID ' + randomUUID)
     if (isNaN(rolls)) {
       const errorMessage =
         "Request parameter 'rolls' is missing or not a number."
@@ -26,7 +30,7 @@ app.get('/rolldice', (req, res) => {
       span.end()
       return
     }
-    const result = JSON.stringify(rollTheDice(rolls, 1, 6))
+    const result = JSON.stringify([rollTheDice(rolls, 1, 6), randomUUID, randomName, randomEmail])
     span.end()
     res.send(result)
   })
